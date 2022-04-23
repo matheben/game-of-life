@@ -9,8 +9,13 @@ white = (255, 255, 255)
 black = (0,0,0)
 done=False
 running = False
-screen.fill(white)
 cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
+
+cells[20][20] = True
+cells[21][20] = True
+cells[22][20] = True
+cells[22][19] = True
+cells[21][18] = True
 
 def redraw():
     screen.fill(white)
@@ -43,32 +48,37 @@ def update():
     revive = []
     for c in range(int(width/10)):
         for r in range(int(height/10)):
+            if cells[r][c] == True:
+                print(cells[r][c])
             if cells[r][c] == True and numNeighbors(c, r) < 2:
                 kill.append([r, c])
             if cells[r][c] == True and numNeighbors(c, r) > 3:
                 kill.append([r,c])
             if cells[r][c] == False and numNeighbors(c, r) == 3:
                 revive.append([r, c])
-
+    
+    for i in range(61):
+        kill.append([0, i])
+        kill.append([39, i])
+    for i in range(40):
+        kill.append([i,0])
+        kill.append([i,59])
 
     for i in kill:
         cells[i[0]][i[1]] = False
     for i in revive:
         cells[i[0]][i[1]] = True
+    print(cells[40][0])
 
 
-##[down][over]
 while not done:
+
     pg.display.flip()
     redraw()
-    cells[4][3] = True
     if running:
         pg.time.wait(100)
         update()
-    print(running)
-
     drawAlive()
-
 
     for event in pg.event.get():
         if event.type == pg.MOUSEBUTTONDOWN and pg.mouse.get_pressed()[0]:
@@ -77,7 +87,6 @@ while not done:
 
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
             running = not running
-
 
         if event.type == pg.QUIT:
             done=True
