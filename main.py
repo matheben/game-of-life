@@ -61,7 +61,6 @@ def update():
 while not done:
     pg.display.flip()
     redraw()
-    pg.draw.rect(screen, black, (30, 40, 10, 10))
     cells[4][3] = True
     if running:
         pg.time.wait(100)
