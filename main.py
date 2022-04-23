@@ -1,5 +1,4 @@
 import pygame as pg
-from zmq import NULL
 
 pg.display.init()
 width = 600
@@ -11,7 +10,7 @@ black = (0,0,0)
 done=False
 running = False
 screen.fill(white)
-cells = [[False] * int(width/cellsize) for i in range(int(height/cellsize))]
+cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
 
 def redraw():
     screen.fill(white)
@@ -40,22 +39,22 @@ def numNeighbors(x, y):
     return count
 
 def update():
-    kill = [[]]
-    revive = [[]]
+    kill = []
+    revive = []
     for c in range(int(width/10)):
         for r in range(int(height/10)):
             if cells[r][c] == True and numNeighbors(c, r) < 2:
                 kill.append([r, c])
-            #if cells[r][c] == True and numNeighbors(c, r) > 3:
-                #kill.append(r,c)
-            #if cells[r][c] == False and numNeighbors(c, r) == 3:
-                #revive.append(r,c)
-        #kill.pop(0)
+            if cells[r][c] == True and numNeighbors(c, r) > 3:
+                kill.append([r,c])
+            if cells[r][c] == False and numNeighbors(c, r) == 3:
+                revive.append([r, c])
+
+
     for i in kill:
-            cells[i[0]][[1]] = False
-        #cells[i[0]][i[1]] = False
-    # for i in revive:
-    #     cells[i[0]][i[1]] = False
+        cells[i[0]][i[1]] = False
+    for i in revive:
+        cells[i[0]][i[1]] = True
 
 
 ##[down][over]
@@ -64,9 +63,10 @@ while not done:
     redraw()
     pg.draw.rect(screen, black, (30, 40, 10, 10))
     cells[4][3] = True
-    print(numNeighbors(3, 4))
     if running:
+        pg.time.wait(100)
         update()
+    print(running)
 
     drawAlive()
 
