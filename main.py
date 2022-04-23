@@ -13,12 +13,13 @@ screen.fill(white)
 cells = [[False] * int(width/cellsize) for i in range(int(height/cellsize))]
 
 
-for i in range(0, width, cellsize):
-    pg.draw.line(screen, black, (i, height), (i, 0), width=1)
-for i in range(0, height, 10):
-    pg.draw.line(screen, black, (width, i), (0, i), width=1)
+def redraw():
+    screen.fill(white)
+    for i in range(0, width, cellsize):
+        pg.draw.line(screen, black, (i, height), (i, 0), width=1)
+    for i in range(0, height, 10):
+        pg.draw.line(screen, black, (width, i), (0, i), width=1)
 
-pg.display.flip()
 
 def drawAlive():
     rPointer = 0
@@ -34,15 +35,14 @@ def drawAlive():
 
 
 while not done:
-
     pg.display.flip()
+    redraw()
     drawAlive()
     for event in pg.event.get():
         if event.type == pg.MOUSEBUTTONDOWN and pg.mouse.get_pressed()[0]:
-            #print(pg.mouse.get_pos()[0])
             cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]\
-                =not cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]
-            
+                = not cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]
+
 
         if event.type == pg.QUIT:
             done=True
