@@ -38,7 +38,7 @@ def numNeighbors(x, y):
     count = 0
     for c in range(x-1, x+2):
         for r in range(y-1, y+2):
-            if(cells[r][c]) == True:
+            if(cells[r][c]):
                 if not(r == y and c == x):
                     count += 1
     return count
@@ -48,13 +48,11 @@ def update():
     revive = []
     for c in range(int(width/10)):
         for r in range(int(height/10)):
-            if cells[r][c] == True:
-                print(cells[r][c])
-            if cells[r][c] == True and numNeighbors(c, r) < 2:
+            if cells[r][c] and numNeighbors(c, r) < 2:
                 kill.append([r, c])
-            if cells[r][c] == True and numNeighbors(c, r) > 3:
+            if cells[r][c] and numNeighbors(c, r) > 3:
                 kill.append([r,c])
-            if cells[r][c] == False and numNeighbors(c, r) == 3:
+            if not cells[r][c] and numNeighbors(c, r) == 3:
                 revive.append([r, c])
     
     for i in range(61):
@@ -63,16 +61,14 @@ def update():
     for i in range(40):
         kill.append([i,0])
         kill.append([i,59])
-
     for i in kill:
         cells[i[0]][i[1]] = False
     for i in revive:
         cells[i[0]][i[1]] = True
-    print(cells[40][0])
+
 
 
 while not done:
-
     pg.display.flip()
     redraw()
     if running:
@@ -84,11 +80,8 @@ while not done:
         if event.type == pg.MOUSEBUTTONDOWN and pg.mouse.get_pressed()[0]:
             cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]\
                 = not cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]
-
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
             running = not running
-
         if event.type == pg.QUIT:
             done=True
-            pg.display.flip()
 
