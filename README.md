@@ -5,7 +5,7 @@ Must have python and pygame installed to run
 
 Initially starts frozen, use spacebar to unfreeze and freeze.
 Click on cells to kill or revive them.
-Sarts with basic glider.
+Sarts a simple pattern that spawns some cool random behavior. 
 
 2/3 live neighbors: cell survives. 
 <2 or >3 live neighbors: cell dies. 

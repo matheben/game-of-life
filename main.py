@@ -11,11 +11,11 @@ done=False
 running = False
 cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
 
-cells[20][20] = True
-cells[21][20] = True
-cells[22][20] = True
-cells[22][19] = True
-cells[21][18] = True
+cells[20][30] = True
+cells[21][30] = True
+cells[22][30] = True
+cells[21][29] = True
+cells[20][28] = True
 
 def redraw():
     screen.fill(white)
