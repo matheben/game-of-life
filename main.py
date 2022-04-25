@@ -2,7 +2,7 @@ import pygame as pg
 import pickle
 
 pg.display.init()
-width = 800
+width = 1000
 height = 600
 cellsize = 10
 screen = pg.display.set_mode(size=((width, height)))
@@ -10,11 +10,33 @@ white = (255, 255, 255)
 black = (0,0,0)
 done=False
 running = False
+tst = (0,0,255)
 cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
 
 
-with open('glider_factory.data', 'rb') as filehandle:
-    cells = pickle.load(filehandle)
+
+#with open('glider_factory.data', 'rb') as filehandle:
+    #cells = pickle.load(filehandle)
+
+file = open('tester.txt')
+fs = file.read()
+
+
+r=3
+c=1
+
+for letter in fs:
+    if letter == "\n":
+        c = 0
+        r+=1
+    if letter == "O":
+        cells[r][c] = True
+    c += 1
+
+
+
+
+file.close()
 
 
 # cells[20][30] = True
@@ -29,7 +51,7 @@ def redraw():
         pg.draw.line(screen, black, (i, height), (i, 0), width=1)
     for i in range(0, height, 10):
         pg.draw.line(screen, black, (width, i), (0, i), width=1)
-    pg.draw.rect(screen, black,(0,0, width, height), width=40)
+    #pg.draw.rect(screen, black,(0,0, width, height), width=40)
 
 def drawAlive():
     rPointer = 0
@@ -70,7 +92,6 @@ def update():
 
 
 while not done:
-    print(running)
     pg.display.flip()
     redraw()
     if running:
@@ -82,6 +103,8 @@ while not done:
         if event.type == pg.MOUSEBUTTONDOWN and pg.mouse.get_pressed()[0]:
             cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]\
                 = not cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]
+        if event.type == pg.KEYDOWN and event.key == pg.K_q:
+            cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
             running = not running
         if event.type == pg.KEYDOWN and event.key == pg.K_c:
