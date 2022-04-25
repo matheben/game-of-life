@@ -14,11 +14,12 @@ cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize)
 
 
 
-with open('my_pattern.data', 'rb') as filehandle:
+##comment/uncomment to switch to presaved patterns
+with open('glider_factory.data', 'rb') as filehandle:
     cells = pickle.load(filehandle)
 
 
-##Chamge "teter.txt" to any .txt file in folder and uncomment to load patterns
+##Change "teter.txt" to any .txt file in folder and uncomment to load patterns
 # file = open('tester.txt')
 # fs = file.read()
 # r=3
