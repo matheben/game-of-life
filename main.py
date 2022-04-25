@@ -1,8 +1,9 @@
 import pygame as pg
+import pickle
 
 pg.display.init()
-width = 600
-height = 400
+width = 800
+height = 600
 cellsize = 10
 screen = pg.display.set_mode(size=((width, height)))
 white = (255, 255, 255)
@@ -11,11 +12,16 @@ done=False
 running = False
 cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
 
-cells[20][30] = True
-cells[21][30] = True
-cells[22][30] = True
-cells[21][29] = True
-cells[20][28] = True
+
+with open('glider_factory.data', 'rb') as filehandle:
+    cells = pickle.load(filehandle)
+
+
+# cells[20][30] = True
+# cells[21][30] = True
+# cells[22][30] = True
+# cells[22][29] = True
+# cells[21][28] = True
 
 def redraw():
     screen.fill(white)
@@ -23,6 +29,7 @@ def redraw():
         pg.draw.line(screen, black, (i, height), (i, 0), width=1)
     for i in range(0, height, 10):
         pg.draw.line(screen, black, (width, i), (0, i), width=1)
+    pg.draw.rect(screen, black,(0,0, width, height), width=40)
 
 def drawAlive():
     rPointer = 0
@@ -55,12 +62,6 @@ def update():
             if not cells[r][c] and numNeighbors(c, r) == 3:
                 revive.append([r, c])
     
-    for i in range(61):
-        kill.append([0, i])
-        kill.append([39, i])
-    for i in range(40):
-        kill.append([i,0])
-        kill.append([i,59])
     for i in kill:
         cells[i[0]][i[1]] = False
     for i in revive:
@@ -69,10 +70,11 @@ def update():
 
 
 while not done:
+    print(running)
     pg.display.flip()
     redraw()
     if running:
-        pg.time.wait(100)
+        pg.time.wait(20)
         update()
     drawAlive()
 
@@ -82,6 +84,9 @@ while not done:
                 = not cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
             running = not running
+        if event.type == pg.KEYDOWN and event.key == pg.K_c:
+            with open('listfile.data', 'wb') as filehandle:
+                pickle.dump(cells, filehandle)
         if event.type == pg.QUIT:
             done=True
 
