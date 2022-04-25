@@ -10,40 +10,30 @@ white = (255, 255, 255)
 black = (0,0,0)
 done=False
 running = False
-tst = (0,0,255)
 cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize))]
 
 
 
-#with open('glider_factory.data', 'rb') as filehandle:
-    #cells = pickle.load(filehandle)
-
-file = open('tester.txt')
-fs = file.read()
+with open('glider_factory.data', 'rb') as filehandle:
+    cells = pickle.load(filehandle)
 
 
-r=3
-c=1
+##Chamge "teter.txt" to any .txt file in folder and uncomment to load patterns
+# file = open('tester.txt')
+# fs = file.read()
+# r=3
+# c=1
+# for letter in fs:
+#     if letter == "\n":
+#         c = 0
+#         r+=1
+#     if letter == "O":
+#         cells[r][c] = True
+#     c += 1
+# file.close()
+##########
 
-for letter in fs:
-    if letter == "\n":
-        c = 0
-        r+=1
-    if letter == "O":
-        cells[r][c] = True
-    c += 1
 
-
-
-
-file.close()
-
-
-# cells[20][30] = True
-# cells[21][30] = True
-# cells[22][30] = True
-# cells[22][29] = True
-# cells[21][28] = True
 
 def redraw():
     screen.fill(white)
@@ -51,7 +41,6 @@ def redraw():
         pg.draw.line(screen, black, (i, height), (i, 0), width=1)
     for i in range(0, height, 10):
         pg.draw.line(screen, black, (width, i), (0, i), width=1)
-    #pg.draw.rect(screen, black,(0,0, width, height), width=40)
 
 def drawAlive():
     rPointer = 0
@@ -89,8 +78,6 @@ def update():
     for i in revive:
         cells[i[0]][i[1]] = True
 
-
-
 while not done:
     pg.display.flip()
     redraw()
@@ -98,7 +85,6 @@ while not done:
         pg.time.wait(20)
         update()
     drawAlive()
-
     for event in pg.event.get():
         if event.type == pg.MOUSEBUTTONDOWN and pg.mouse.get_pressed()[0]:
             cells[int(pg.mouse.get_pos()[1]/10)][int(pg.mouse.get_pos()[0]/10)]\
@@ -108,7 +94,7 @@ while not done:
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
             running = not running
         if event.type == pg.KEYDOWN and event.key == pg.K_c:
-            with open('listfile.data', 'wb') as filehandle:
+            with open('my_pattern.data', 'wb') as filehandle:
                 pickle.dump(cells, filehandle)
         if event.type == pg.QUIT:
             done=True
