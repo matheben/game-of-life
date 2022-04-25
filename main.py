@@ -2,6 +2,7 @@ import pygame as pg
 import pickle
 
 pg.display.init()
+filecount = 0
 width = 1000
 height = 600
 cellsize = 10
@@ -95,7 +96,8 @@ while not done:
         if event.type == pg.KEYDOWN and event.key == pg.K_SPACE:
             running = not running
         if event.type == pg.KEYDOWN and event.key == pg.K_c:
-            with open('my_pattern.data', 'wb') as filehandle:
+            filecount += 1
+            with open('my_pattern.data' + str(filecount), 'wb') as filehandle:
                 pickle.dump(cells, filehandle)
         if event.type == pg.QUIT:
             done=True

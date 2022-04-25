@@ -17,7 +17,7 @@ Press q to clear the board.
 change line 23 and uncomment 23-35 to load patterns from https://conwaylife.com/wiki/.
 All credit for these patterns goes to original creaters
 
-press 'c' to save a pattern, can only save one at a time.
+press 'c' to save a pattern.
 saved patterns must be opened with lines 18/19.
 Must close and reopen program to load your own saved patterns.
 
