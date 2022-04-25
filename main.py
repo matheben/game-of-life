@@ -14,7 +14,7 @@ cells = [[False] * int(width+10/cellsize) for i in range(int(height+10/cellsize)
 
 
 
-with open('glider_factory.data', 'rb') as filehandle:
+with open('my_pattern.data', 'rb') as filehandle:
     cells = pickle.load(filehandle)
 
 
